@@ -3,6 +3,7 @@ package br.ifrn.edu.jeferson.ecommerce.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.ifrn.edu.jeferson.ecommerce.domain.Cliente;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.ClienteRequestDTO;
@@ -12,6 +13,7 @@ import br.ifrn.edu.jeferson.ecommerce.exception.ResourceNotFoundException;
 import br.ifrn.edu.jeferson.ecommerce.mapper.ClienteMapper;
 import br.ifrn.edu.jeferson.ecommerce.repository.ClienteRepository;
 
+@Service
 public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
@@ -45,7 +47,7 @@ public class ClienteService {
         return clienteMapper.toDTOList(clientes);
     }
 
-    public ClienteResponseDTO listarPorId(Long id) {
+    public ClienteResponseDTO buscarPorId(Long id) {
        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Este cliente não existe")); 
        return clienteMapper.toResponseDTO(cliente); 
     }

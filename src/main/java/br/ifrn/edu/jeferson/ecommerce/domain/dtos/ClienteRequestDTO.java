@@ -19,7 +19,7 @@ public class ClienteRequestDTO {
 
     @Schema(description = "Seu email principal", example = "toddyinho@nescau.com")
     @NotBlank(message = "Email é obrigatório")
-    @Email(message = "Email inválido", regexp = "/^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @Email(message = "Email inválido", regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     @Schema(description = "Seu CPF", example = "000.000.000-00")
