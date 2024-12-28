@@ -17,7 +17,7 @@ public interface ClienteMapper {
     @Mapping(target = "pedidos", ignore = true)
     Cliente toEntity(ClienteRequestDTO clienteRequestDTO);
 
-    ClienteResponseDTO ToResponseDTO(Cliente cliente);
+    ClienteResponseDTO toResponseDTO(Cliente cliente);
 
     List<ClienteResponseDTO> toDTOList(List<Cliente> clientes);
 
