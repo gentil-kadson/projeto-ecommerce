@@ -2,6 +2,7 @@ package br.ifrn.edu.jeferson.ecommerce.domain.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Getter
@@ -32,5 +33,6 @@ public class EnderecoRequestDTO {
 
     @Schema(description = "CEP onde você mora", example = "59910-000")
     @NotBlank(message = "CEP é obrigatório")
+    @Pattern(message = "CEP deve estar no formato XXXXX-XXX", regexp = "^[0-9]{5}-[0-9]{3}$")
     private String cep;
 }

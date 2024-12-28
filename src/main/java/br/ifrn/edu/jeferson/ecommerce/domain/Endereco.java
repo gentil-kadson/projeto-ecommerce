@@ -33,6 +33,6 @@ public class Endereco {
     private String cep;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 }
