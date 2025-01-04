@@ -65,4 +65,12 @@ public class EnderecoService {
         Endereco endereco = buscarEndereco(id);
         enderecoRepository.delete(endereco);
     }
+
+    public EnderecoResponseDTO atualizar(EnderecoRequestDTO enderecoRequestDTO, Long id) {
+        Endereco endereco = buscarEndereco(id);
+
+        enderecoMapper.updateEntityFromDTO(enderecoRequestDTO, endereco);
+        Endereco enderecoAlterado = enderecoRepository.save(endereco);
+        return enderecoMapper.ToResponseDTO(enderecoAlterado);
+    }
 }
