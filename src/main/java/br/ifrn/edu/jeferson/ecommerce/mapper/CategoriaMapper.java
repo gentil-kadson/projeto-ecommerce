@@ -19,7 +19,6 @@ public interface CategoriaMapper {
 
     List<CategoriaResponseDTO> toDTOList(List<Categoria> categorias);
 
-
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "produtos", ignore = true)

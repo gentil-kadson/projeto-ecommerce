@@ -16,9 +16,17 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String nome;
+
+    @Column(unique = true, nullable = false)
     private String email;
+    
+    @Column(unique = true, nullable = false)
     private String cpf;
+    
+    @Column(unique = false, nullable = false)
     private String telefone;
 
     @OneToOne(mappedBy = "cliente")
@@ -26,6 +34,4 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
-
-
 }
