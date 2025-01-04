@@ -19,20 +19,20 @@ import lombok.Setter;
 @Schema(description = "DTO para requisição de produto")
 public class ProdutoRequestDTO {
     @Schema(description = "O nome do produto", example = "PlayStation 3 Slim")
-    @NotBlank
+    @NotBlank(message = "O nome do produto é obrigatório")
     private String nome;
     
     @Schema(description = "Descrição do produto", example = "Console PS3 da Sony")
-    @NotBlank
+    @NotBlank(message = "A descrição é obrigatória")
     private String descricao;
     
     @Schema(description = "Preço do produto", example = "530")
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = false)
-    @Digits(integer = Integer.MAX_VALUE, fraction = 2)
+    @NotNull(message = "O preço é obrigatório")
+    @DecimalMin(value = "0.0", inclusive = false, message = "O preço tem que ser maior do que 0")
+    @Digits(integer = Integer.MAX_VALUE, fraction = 2, message = "O limite de valor foi excedido")
     private BigDecimal preco;
 
     @Schema(description = "A quantidade de produtos no estoque", example = "10")
-    @NotNull
+    @NotNull(message = "A quantidade do produto no estoque é obrigatória")
     private Integer estoque;
 }

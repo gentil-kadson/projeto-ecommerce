@@ -2,7 +2,6 @@ package br.ifrn.edu.jeferson.ecommerce.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,9 +25,8 @@ public class Produto {
     @Column(nullable = false)
     private String descricao;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = Integer.MAX_VALUE + 2, scale = 2)
     @DecimalMin(value = "0.0", inclusive = false)
-    @Digits(integer = Integer.MAX_VALUE, fraction = 2)
     private BigDecimal preco;
 
     @Column(nullable = false)
@@ -39,5 +37,4 @@ public class Produto {
             joinColumns = @JoinColumn(name = "produto_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias = new ArrayList<>();
-
 }
