@@ -32,7 +32,7 @@ public class Endereco {
     @Column(nullable = false)
     private String cep;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 }

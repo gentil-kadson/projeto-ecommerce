@@ -2,6 +2,7 @@ package br.ifrn.edu.jeferson.ecommerce.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,5 +34,12 @@ public class EnderecoController {
     @GetMapping
     public ResponseEntity<EnderecoResponseDTO> buscar(@PathVariable Long id) {
         return ResponseEntity.ok(enderecoService.buscar(id));
+    }
+
+    @Operation(summary = "Deleta o endereço do cliente")
+    @DeleteMapping
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        enderecoService.deletar(id);
+        return ResponseEntity.ok().build();
     }
 }

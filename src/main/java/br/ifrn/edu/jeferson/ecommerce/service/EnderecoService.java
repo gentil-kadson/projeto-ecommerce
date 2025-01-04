@@ -30,8 +30,22 @@ public class EnderecoService {
         }
     }
 
+    public void jogueSeClienteNaoPossuiEndereco(Cliente cliente) {
+        if (!enderecoRepository.existsByCliente(cliente)) {
+            throw new ResourceNotFoundException("Este cliente não possui endereço cadastrado");
+        }
+    }
+
+    public Endereco buscarEndereco(Long clienteId) {
+        return enderecoRepository.findByClienteId(clienteId).orElseThrow(() -> new ResourceNotFoundException("Este cliente não possui um endereço"));
+    }
+
+    public Cliente buscarCliente(Long id) {
+        return clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Este cliente não existe"));
+    }
+
     public EnderecoResponseDTO salvar(EnderecoRequestDTO enderecoRequestDTO, Long id) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuário com este id não existe"));
+        Cliente cliente = buscarCliente(id);
         jogueSeClienteJaPossuiEndereco(cliente);
         Endereco endereco = enderecoMapper.toEntity(enderecoRequestDTO);
         
@@ -41,7 +55,14 @@ public class EnderecoService {
     }
 
     public EnderecoResponseDTO buscar(Long id) {
-        Endereco endereco = enderecoRepository.findByClienteId(id).orElseThrow(() -> new ResourceNotFoundException("Este cliente não possui um endereço."));
+        Endereco endereco = buscarEndereco(id);
         return enderecoMapper.ToResponseDTO(endereco);
+    }
+
+    public void deletar(Long id) {
+        Cliente cliente = buscarCliente(id);
+        jogueSeClienteNaoPossuiEndereco(cliente);
+        Endereco endereco = buscarEndereco(id);
+        enderecoRepository.delete(endereco);
     }
 }
