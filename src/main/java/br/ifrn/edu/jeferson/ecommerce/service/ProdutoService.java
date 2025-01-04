@@ -39,4 +39,11 @@ public class ProdutoService {
         }
         produtoRepository.deleteById(id);        
     }
+
+    public ProdutoResponseDTO atualizar(Long id, ProdutoRequestDTO produtoRequestDTO) {
+        Produto produto = buscarProduto(id);
+        produtoMapper.updateEntityFromDTO(produtoRequestDTO, produto);
+        Produto produtoAlterado = produtoRepository.save(produto);
+        return produtoMapper.toResponseDTO(produtoAlterado);
+    }
 }

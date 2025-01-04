@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -34,5 +35,6 @@ public class ProdutoRequestDTO {
 
     @Schema(description = "A quantidade de produtos no estoque", example = "10")
     @NotNull(message = "A quantidade do produto no estoque é obrigatória")
+    @Min(value = 0, message = "Estoque não pode ser negativo")
     private Integer estoque;
 }
