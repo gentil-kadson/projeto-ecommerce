@@ -7,6 +7,7 @@ import br.ifrn.edu.jeferson.ecommerce.domain.Cliente;
 import br.ifrn.edu.jeferson.ecommerce.domain.Endereco;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.EnderecoRequestDTO;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.EnderecoResponseDTO;
+import br.ifrn.edu.jeferson.ecommerce.exception.BusinessException;
 import br.ifrn.edu.jeferson.ecommerce.exception.ResourceNotFoundException;
 import br.ifrn.edu.jeferson.ecommerce.mapper.EnderecoMapper;
 import br.ifrn.edu.jeferson.ecommerce.repository.ClienteRepository;
@@ -23,8 +24,15 @@ public class EnderecoService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    public void jogueSeClienteJaPossuiEndereco(Cliente cliente) {
+        if (enderecoRepository.existsByCliente(cliente)) {
+            throw new BusinessException("Este cliente já possui um endereço");
+        }
+    }
+
     public EnderecoResponseDTO salvar(EnderecoRequestDTO enderecoRequestDTO, Long id) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuário com este id não existe"));
+        jogueSeClienteJaPossuiEndereco(cliente);
         Endereco endereco = enderecoMapper.toEntity(enderecoRequestDTO);
         
         endereco.setCliente(cliente);
@@ -33,9 +41,7 @@ public class EnderecoService {
     }
 
     public EnderecoResponseDTO buscar(Long id) {
-        Endereco endereco = enderecoRepository.findByClienteId(id);
-        System.out.println("Olha sóh shamone!");
-        System.out.println(endereco);
+        Endereco endereco = enderecoRepository.findByClienteId(id).orElseThrow(() -> new ResourceNotFoundException("Este cliente não possui um endereço."));
         return enderecoMapper.ToResponseDTO(endereco);
     }
 }
