@@ -21,21 +21,33 @@ public class ClienteService {
     @Autowired
     private ClienteMapper clienteMapper;
 
-    public void jogueSeCpfJaExiste(String cpf) {
-        if (clienteRepository.existsByCpf(cpf)) {
-            throw new BusinessException("Já existe um cliente com esse CPF");
+    public void jogueSeCpfJaExiste(String cpf, Long clienteId) {
+        if (clienteId == null) {
+            if (clienteRepository.existsByCpf(cpf)) {
+                throw new BusinessException("Já existe um cliente com esse CPF");
+            }
+        } else {
+            if (clienteRepository.existsByCpfAndIdNot(cpf, clienteId)) {
+                throw new BusinessException("Já existe um cliente com esse CPF");
+            }
         }
     }
 
-    public void jogueSeEmailJaExiste(String email) {
-        if (clienteRepository.existsByEmail(email)) {
-            throw new BusinessException("Já existe um cliente com esse email");
+    public void jogueSeEmailJaExiste(String email, Long clienteId) {
+        if (clienteId == null) {
+            if (clienteRepository.existsByEmail(email)) {
+                throw new BusinessException("Já existe um cliente com esse email");
+            }
+        } else {
+            if (clienteRepository.existsByEmailAndIdNot(email, clienteId)) {
+                throw new BusinessException("Já existe um cliente com esse email");
+            }
         }
     }
 
     public ClienteResponseDTO salvar(ClienteRequestDTO clienteRequestDTO) {
-        this.jogueSeCpfJaExiste(clienteRequestDTO.getCpf());
-        this.jogueSeEmailJaExiste(clienteRequestDTO.getEmail());
+        this.jogueSeCpfJaExiste(clienteRequestDTO.getCpf(), null);
+        this.jogueSeEmailJaExiste(clienteRequestDTO.getEmail(), null);
 
         Cliente cliente = clienteMapper.toEntity(clienteRequestDTO);
         clienteRepository.save(cliente);
@@ -61,8 +73,8 @@ public class ClienteService {
 
     public ClienteResponseDTO atualizar(Long id, ClienteRequestDTO clienteRequestDTO) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Este cliente não existe"));
-        this.jogueSeCpfJaExiste(clienteRequestDTO.getCpf());
-        this.jogueSeEmailJaExiste(clienteRequestDTO.getEmail());
+        this.jogueSeCpfJaExiste(clienteRequestDTO.getCpf(), id);
+        this.jogueSeEmailJaExiste(clienteRequestDTO.getEmail(), id);
         
         clienteMapper.updateEntityFromDTO(clienteRequestDTO, cliente);
         Cliente clienteAlterado = clienteRepository.save(cliente);
