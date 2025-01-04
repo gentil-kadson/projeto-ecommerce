@@ -16,6 +16,7 @@ public class CategoriaRequestDTO {
     private String nome;
 
     @Schema(description = "Descrição da categoria", example = "Produtos eletrônicos em geral")
+    @NotBlank(message = "Descrição é obrigatório")
     private String descricao;
 
 }
