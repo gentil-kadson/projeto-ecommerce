@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "DTO para requisição de endereço")
+@Schema(description = "DTO para resposta de endereço")
 public class EnderecoResponseDTO {
     @Schema(description = "ID do endereço", example = "1")
     private Long id;
