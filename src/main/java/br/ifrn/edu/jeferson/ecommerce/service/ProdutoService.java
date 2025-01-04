@@ -46,4 +46,11 @@ public class ProdutoService {
         Produto produtoAlterado = produtoRepository.save(produto);
         return produtoMapper.toResponseDTO(produtoAlterado);
     }
+
+    public ProdutoResponseDTO atualizarEstoque(Long id, Integer estoque) {
+        Produto produto = buscarProduto(id);
+        produto.setEstoque(estoque);
+        Produto produtoAlteado = produtoRepository.save(produto);
+        return produtoMapper.toResponseDTO(produtoAlteado);
+    }
 }
