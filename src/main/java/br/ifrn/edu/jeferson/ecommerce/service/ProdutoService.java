@@ -19,7 +19,7 @@ public class ProdutoService {
     private ProdutoMapper produtoMapper;
 
     Produto buscarProduto(Long id) {
-        return produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Este produto não foi encontrado"));
+        return produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
     }
 
     public ProdutoResponseDTO salvar(ProdutoRequestDTO produtoRequestDTO) {
@@ -31,5 +31,12 @@ public class ProdutoService {
     public ProdutoResponseDTO buscar(Long id) {
         Produto produto = buscarProduto(id);
         return produtoMapper.toResponseDTO(produto);
+    }
+
+    public void deletar(Long id) {
+        if (!produtoRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Produto não encontrado");
+        }
+        produtoRepository.deleteById(id);        
     }
 }
