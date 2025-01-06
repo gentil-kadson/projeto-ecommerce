@@ -87,7 +87,7 @@ public class CategoriaService {
         produtoRepository.save(produto);
     }
 
-    public void desasociarProduto(Long produtoId, Long categoriaId) {
+    public void desassociarProduto(Long produtoId, Long categoriaId) {
         Produto produto = buscarProduto(produtoId);
         Categoria categoria = buscarCategoria(categoriaId);
 

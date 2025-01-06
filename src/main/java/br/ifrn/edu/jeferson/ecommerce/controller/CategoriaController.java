@@ -59,10 +59,10 @@ public class CategoriaController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Desasocia um produto a uma determinada categoria")
+    @Operation(summary = "Desassocia um produto a uma determinada categoria")
     @DeleteMapping("/{categoriaId}/produtos/{produtoId}")
-    public ResponseEntity<Void> desasociarProduto(@PathVariable Long categoriaId, @PathVariable Long produtoId) {
-        categoriaService.desasociarProduto(produtoId, categoriaId);
+    public ResponseEntity<Void> desassociarProduto(@PathVariable Long categoriaId, @PathVariable Long produtoId) {
+        categoriaService.desassociarProduto(produtoId, categoriaId);
         return ResponseEntity.noContent().build();
     }
 
