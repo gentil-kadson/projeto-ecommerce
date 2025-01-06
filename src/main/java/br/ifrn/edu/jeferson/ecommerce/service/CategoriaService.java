@@ -31,6 +31,10 @@ public class CategoriaService {
         return categoriaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
     }
 
+    public Produto buscarProduto(Long id) {
+        return produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
+    }
+
     public CategoriaResponseDTO salvar(CategoriaRequestDTO categoriaDto) {
         var categoria =  mapper.toEntity(categoriaDto);
 
@@ -73,13 +77,24 @@ public class CategoriaService {
     }
 
     public void associarProduto(Long produtoId, Long categoriaId) {
-        Produto produto = produtoRepository.findById(produtoId).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
+        Produto produto = buscarProduto(produtoId);
         Categoria categoria = buscarCategoria(categoriaId);
 
         if (produto.getCategorias().contains(categoria)) {
             throw new BusinessException("Este produto já está nessa categoria");
         }
         produto.getCategorias().add(categoria);
+        produtoRepository.save(produto);
+    }
+
+    public void desasociarProduto(Long produtoId, Long categoriaId) {
+        Produto produto = buscarProduto(produtoId);
+        Categoria categoria = buscarCategoria(categoriaId);
+
+        if (!produto.getCategorias().contains(categoria)) {
+            throw new BusinessException("Este produto não está associado a esta categoria");
+        }
+        produto.getCategorias().remove(categoria);
         produtoRepository.save(produto);
     }
 }
