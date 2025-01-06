@@ -52,4 +52,11 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaService.atualizar(id, categoriaDto));
     }
 
+    @Operation(summary = "Associa um produto a uma determinada categoria")
+    @PostMapping("/{categoriaId}/produtos/{produtoId}")
+    public ResponseEntity<Void> associarProduto(@PathVariable Long categoriaId, @PathVariable Long produtoId) {
+        categoriaService.associarProduto(produtoId, categoriaId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

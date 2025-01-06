@@ -1,5 +1,7 @@
 package br.ifrn.edu.jeferson.ecommerce.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,5 +57,10 @@ public class ProdutoController {
     public ResponseEntity<Void> atualizarEstoque(@PathVariable Long id, @RequestBody @Valid ProdutoPartialRequestDTO produtoPartialRequestDTO) {
         produtoService.atualizarEstoque(id, produtoPartialRequestDTO.getEstoque());
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/categorias/{id}")
+    public ResponseEntity<List<ProdutoResponseDTO>> listarPorCategoria(@PathVariable Long id) {
+        return ResponseEntity.ok(produtoService.listarPorCategoria(id));
     }
 }
