@@ -16,8 +16,10 @@ import lombok.Setter;
 public class ItemPedidoRequestDTO {
     @NotNull(message = "A quantidade do item não pode ser vazia")
     @Min(value = 1, message = "Um item tem que ter pelo menos 1 unidade")
+    @Schema(description = "A quantidade do item a ser adicionado no pedido", example = "3")
     private Integer quantidade;
 
+    @Schema(description = "ID referente ao produto a ser adicionado como item", example = "2")
     @NotNull(message = "É necessário informar a qual produto o item se refere")
     private Long produtoId;
 }
