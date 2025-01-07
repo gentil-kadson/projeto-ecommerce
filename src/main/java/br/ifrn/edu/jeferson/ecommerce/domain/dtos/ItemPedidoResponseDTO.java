@@ -12,5 +12,5 @@ import lombok.Setter;
 public class ItemPedidoResponseDTO {
     private Long id;
     private Integer quantidade;
-    private ProdutoResponseDTO produtoResponseDTO;
+    private ProdutoResponseDTO produto;
 }

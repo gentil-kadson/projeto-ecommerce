@@ -17,7 +17,7 @@ public interface ItemPedidoMapper {
     @Mapping(target = "pedido", ignore = true)
     ItemPedido toEntity(ItemPedidoRequestDTO itemPedidoRequestDTO);
 
-    @Mapping(source = "produto", target = "produtoResponseDTO")
+    @Mapping(source = "produto", target = "produto")
     ItemPedidoResponseDTO toResponseDTO(ItemPedido itemPedido);
     List<ItemPedidoResponseDTO> toDTOList(List<ItemPedido> itens);
 
