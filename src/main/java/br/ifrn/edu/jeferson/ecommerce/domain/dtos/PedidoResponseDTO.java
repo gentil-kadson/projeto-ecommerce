@@ -15,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PedidoResponseDTO {
+    private Long id;
     private LocalDateTime dataPedido;
     private BigDecimal valorTotal;
     private StatusPedido statusPedido;

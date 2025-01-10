@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class ItemPedido {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,9 +22,4 @@ public class ItemPedido {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
-
-
-
-
-
 }
