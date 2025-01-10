@@ -12,6 +12,7 @@ import br.ifrn.edu.jeferson.ecommerce.domain.ItemPedido;
 import br.ifrn.edu.jeferson.ecommerce.domain.Pedido;
 import br.ifrn.edu.jeferson.ecommerce.domain.Produto;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.ItemPedidoRequestDTO;
+import br.ifrn.edu.jeferson.ecommerce.domain.dtos.PedidoPartialRequestDTO;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.PedidoRequestDTO;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.PedidoResponseDTO;
 import br.ifrn.edu.jeferson.ecommerce.domain.enums.StatusPedido;
@@ -39,6 +40,10 @@ public class PedidoService {
 
     @Autowired
     private ItemPedidoMapper itemPedidoMapper;
+
+    public Pedido buscarPedido(Long id) {
+        return pedidoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado"));
+    }
 
     public PedidoResponseDTO salvar(PedidoRequestDTO pedidoRequestDTO) {
         Pedido pedido = pedidoMapper.toEntity(pedidoRequestDTO);
@@ -76,12 +81,23 @@ public class PedidoService {
     }
 
     public PedidoResponseDTO buscar(Long id) {
-        Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado"));
+        Pedido pedido = buscarPedido(id);
         return pedidoMapper.toResponseDTO(pedido);
     }
 
     public List<PedidoResponseDTO> buscarPorCliente(Long id) {
         List<Pedido> pedidos = pedidoRepository.findByClienteId(id);
         return pedidoMapper.toDTOList(pedidos);
+    }
+
+    public void atualizarStatus(Long id, PedidoPartialRequestDTO pedidoPartialRequestDTO) {
+        Pedido pedido = buscarPedido(id);
+        
+        if (pedido.getStatusPedido() == pedidoPartialRequestDTO.getStatusPedido()) {
+            throw new BusinessException("Não há como atualizar o status do pedido para o que ele já está");
+        }
+
+        pedido.setStatusPedido(pedidoPartialRequestDTO.getStatusPedido());
+        pedidoRepository.save(pedido);
     }
 }

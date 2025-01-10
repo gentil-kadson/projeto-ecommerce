@@ -48,17 +48,20 @@ public class ProdutoController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Atualiza o produto encontrado pelo id")
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDTO) {
         return ResponseEntity.ok(produtoService.atualizar(id, produtoRequestDTO));
     }
 
+    @Operation(summary = "Atualiza o estoque do produto encontrado pelo id")
     @PatchMapping("/{id}/estoque")
     public ResponseEntity<Void> atualizarEstoque(@PathVariable Long id, @RequestBody @Valid ProdutoPartialRequestDTO produtoPartialRequestDTO) {
         produtoService.atualizarEstoque(id, produtoPartialRequestDTO.getEstoque());
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Lista os produtos por categoria")
     @GetMapping("/categorias/{id}")
     public ResponseEntity<List<ProdutoResponseDTO>> listarPorCategoria(@PathVariable Long id) {
         return ResponseEntity.ok(produtoService.listarPorCategoria(id));
