@@ -18,7 +18,7 @@ public interface EnderecoMapper {
     @Mapping(target = "cliente", ignore = true)
     Endereco toEntity(EnderecoRequestDTO enderecoRequestDTO);
 
-    EnderecoResponseDTO ToResponseDTO(Endereco endereco);
+    EnderecoResponseDTO toResponseDTO(Endereco endereco);
 
     List<EnderecoResponseDTO> toDTOList(List<Endereco> enderecos);
 

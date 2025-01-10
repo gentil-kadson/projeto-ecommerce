@@ -51,12 +51,12 @@ public class EnderecoService {
         
         endereco.setCliente(cliente);
         enderecoRepository.save(endereco);
-        return enderecoMapper.ToResponseDTO(endereco);
+        return enderecoMapper.toResponseDTO(endereco);
     }
 
     public EnderecoResponseDTO buscar(Long id) {
         Endereco endereco = buscarEndereco(id);
-        return enderecoMapper.ToResponseDTO(endereco);
+        return enderecoMapper.toResponseDTO(endereco);
     }
 
     public void deletar(Long id) {
@@ -71,6 +71,6 @@ public class EnderecoService {
 
         enderecoMapper.updateEntityFromDTO(enderecoRequestDTO, endereco);
         Endereco enderecoAlterado = enderecoRepository.save(endereco);
-        return enderecoMapper.ToResponseDTO(enderecoAlterado);
+        return enderecoMapper.toResponseDTO(enderecoAlterado);
     }
 }
