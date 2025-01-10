@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/categorias")
-@Tag(name = "Categorias", description = "API de gerenciamento de categorias dos Produtos")
+@Tag(name = "Categorias", description = "API de gerenciamento de categorias dos produtos")
 public class CategoriaController {
     @Autowired
     private CategoriaService categoriaService;
@@ -27,39 +27,39 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaService.salvar(categoriaDto));
     }
 
-    @Operation(summary = "Lista uma nova categoria")
+    @Operation(summary = "Lista todas as categorias registradas")
     @GetMapping
     public ResponseEntity<List<CategoriaResponseDTO>> listar() {
         return ResponseEntity.ok(categoriaService.lista());
     }
 
-    @Operation(summary = "Deleta uma nova categoria")
+    @Operation(summary = "Deleta uma categoria")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         categoriaService.deletar(id);
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Busca uma determinada categoria")
+    @Operation(summary = "Busca uma categoria")
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaResponseDTO> buscar(@PathVariable Long id) {
         return ResponseEntity.ok(categoriaService.buscarPorId(id));
     }
 
-    @Operation(summary = "Atualiza uma nova categoria")
+    @Operation(summary = "Atualiza uma categoria")
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid CategoriaRequestDTO categoriaDto) {
         return ResponseEntity.ok(categoriaService.atualizar(id, categoriaDto));
     }
 
-    @Operation(summary = "Associa um produto a uma determinada categoria")
+    @Operation(summary = "Associa um produto a uma categoria")
     @PostMapping("/{categoriaId}/produtos/{produtoId}")
     public ResponseEntity<Void> associarProduto(@PathVariable Long categoriaId, @PathVariable Long produtoId) {
         categoriaService.associarProduto(produtoId, categoriaId);
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Desassocia um produto a uma determinada categoria")
+    @Operation(summary = "Desassocia um produto a uma categoria")
     @DeleteMapping("/{categoriaId}/produtos/{produtoId}")
     public ResponseEntity<Void> desassociarProduto(@PathVariable Long categoriaId, @PathVariable Long produtoId) {
         categoriaService.desassociarProduto(produtoId, categoriaId);

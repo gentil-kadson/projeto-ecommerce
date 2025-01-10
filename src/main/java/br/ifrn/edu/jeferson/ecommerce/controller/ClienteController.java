@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/clientes")
-@Tag(name = "Clientes", description = "API para gerenciamento de clientes que fazem os produtos")
+@Tag(name = "Clientes", description = "API para gerenciamento de clientes")
 public class ClienteController {
     @Autowired
     private ClienteService clienteService;
@@ -34,31 +34,32 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.salvar(clienteRequestDTO));
     }
 
-    @Operation(summary = "Lista todos os clientes")
+    @Operation(summary = "Lista todos os clientes registrados")
     @GetMapping
     public ResponseEntity<List<ClienteResponseDTO>> listar() {
         return ResponseEntity.ok(clienteService.listar());
     }
 
-    @Operation(summary = "Busca um cliente de um determinado id")
+    @Operation(summary = "Busca um cliente")
     @GetMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.buscarPorId(id));
     }
 
-    @Operation(summary = "Delete um cliente de um determinado id")
+    @Operation(summary = "Deleta um cliente")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         clienteService.deletar(id);
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Atualiza um cliente de um determinado id")
+    @Operation(summary = "Atualiza um cliente")
     @PutMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid ClienteRequestDTO clienteRequestDTO) {
         return ResponseEntity.ok(clienteService.atualizar(id, clienteRequestDTO));
     }
 
+    @Operation(summary = "Lista todos os pedidos feitos pelo cliente")
     @GetMapping("/{id}/pedidos")
     public ResponseEntity<List<PedidoResponseDTO>> listarPedidos(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.listarPedidos(id));

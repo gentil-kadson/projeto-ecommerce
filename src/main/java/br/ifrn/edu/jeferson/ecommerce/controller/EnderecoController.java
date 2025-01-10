@@ -44,6 +44,7 @@ public class EnderecoController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Atualiza o endereço do cliente")
     @PutMapping
     public ResponseEntity<EnderecoResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid EnderecoRequestDTO enderecoRequestDTO) {
         return ResponseEntity.ok(enderecoService.atualizar(enderecoRequestDTO, id));

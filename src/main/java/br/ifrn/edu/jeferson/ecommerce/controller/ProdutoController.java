@@ -29,39 +29,39 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    @Operation(summary = "Cria um produto")
+    @Operation(summary = "Cria um novo produto")
     @PostMapping
     public ResponseEntity<ProdutoResponseDTO> salvar(@RequestBody @Valid ProdutoRequestDTO produtoRequestDTO) {
         return ResponseEntity.ok(produtoService.salvar(produtoRequestDTO));
     }
 
-    @Operation(summary = "Busca um produtor por seu id")
+    @Operation(summary = "Busca um produto")
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> buscar(@PathVariable Long id) {
         return ResponseEntity.ok(produtoService.buscar(id));
     }
 
-    @Operation(summary = "Deleta um produto por seu id")
+    @Operation(summary = "Deleta um produto")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         produtoService.deletar(id);
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Atualiza o produto encontrado pelo id")
+    @Operation(summary = "Atualiza um produto")
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDTO) {
         return ResponseEntity.ok(produtoService.atualizar(id, produtoRequestDTO));
     }
 
-    @Operation(summary = "Atualiza o estoque do produto encontrado pelo id")
+    @Operation(summary = "Atualiza o estoque de um produto")
     @PatchMapping("/{id}/estoque")
     public ResponseEntity<Void> atualizarEstoque(@PathVariable Long id, @RequestBody @Valid ProdutoPartialRequestDTO produtoPartialRequestDTO) {
         produtoService.atualizarEstoque(id, produtoPartialRequestDTO.getEstoque());
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Lista os produtos por categoria")
+    @Operation(summary = "Lista todos os produtos de uma categoria")
     @GetMapping("/categorias/{id}")
     public ResponseEntity<List<ProdutoResponseDTO>> listarPorCategoria(@PathVariable Long id) {
         return ResponseEntity.ok(produtoService.listarPorCategoria(id));
