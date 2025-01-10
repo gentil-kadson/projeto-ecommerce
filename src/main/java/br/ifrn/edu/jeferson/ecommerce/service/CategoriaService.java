@@ -22,8 +22,10 @@ public class CategoriaService {
 
     @Autowired
     private CategoriaMapper mapper;
+
     @Autowired
     private CategoriaMapper categoriaMapper;
+
     @Autowired
     private ProdutoRepository produtoRepository;
 
@@ -55,6 +57,11 @@ public class CategoriaService {
         if (!categoriaRepository.existsById(id)) {
             throw new ResourceNotFoundException("Categoria não encontrada");
         }
+        Categoria categoria = buscarCategoria(id);
+        if (!categoria.getProdutos().isEmpty()) {
+            throw new BusinessException("Esta categoria não pode ser removida, pois possui produtos associados a ela");
+        }
+
         categoriaRepository.deleteById(id);
     }
 
