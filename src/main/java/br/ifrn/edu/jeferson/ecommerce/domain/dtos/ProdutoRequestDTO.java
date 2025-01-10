@@ -33,7 +33,7 @@ public class ProdutoRequestDTO {
     @Digits(integer = Integer.MAX_VALUE, fraction = 2, message = "O limite de valor foi excedido")
     private BigDecimal preco;
 
-    @Schema(description = "A quantidade de produtos no estoque", example = "10")
+    @Schema(description = "A quantidade deste produto no estoque", example = "10")
     @NotNull(message = "A quantidade do produto no estoque é obrigatória")
     @Min(value = 0, message = "Estoque não pode ser negativo")
     private Integer estoque;

@@ -10,9 +10,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "DTO para response de item do pedido")
+@Schema(description = "DTO para resposta com dados de item do pedido")
 public class ItemPedidoResponseDTO {
+    @Schema(description = "ID do item que está no pedido", example = "1")
     private Long id;
+
+    @Schema(description = "Quantidade do item que está no pedido", example = "10")
     private Integer quantidade;
+
+    @Schema(description = "Dados sobre o produto que é o item")
     private ProdutoResponseDTO produto;
 }

@@ -15,5 +15,6 @@ import lombok.Setter;
 @Schema(description = "DTO de Pedido para atualização de seu status")
 public class PedidoPartialRequestDTO {
     @NotNull
+    @Schema(description = "Status do pedido")
     private StatusPedido statusPedido;
 }

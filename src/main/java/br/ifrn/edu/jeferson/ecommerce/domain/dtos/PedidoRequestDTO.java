@@ -17,7 +17,7 @@ import lombok.Setter;
 @Schema(description = "DTO para requisições de pedido")
 public class PedidoRequestDTO {
     @NotEmpty(message = "Um pedido tem que ter pelo menos 1 item")
-    @Schema(description = "Lista de itens a serem colocados no pedido", example = "[{ quantidade: 2, pedidoId: 3 }...]")
+    @Schema(description = "Lista de itens a serem colocados no pedido")
     List<ItemPedidoRequestDTO> itens;
 
     @NotNull(message = "O id do cliente não pode estar vazio")

@@ -19,19 +19,19 @@ public class EnderecoRequestDTO {
     @NotBlank(message = "Número é obrigatório")
     private String numero;
 
-    @Schema(description = "O bairro onde você mora", example = "Centro")
+    @Schema(description = "O bairro do endereço", example = "Centro")
     @NotBlank(message = "Bairro é obrigatório")
     private String bairro;
 
-    @Schema(description = "Cidade onde você mora", example = "Pau dos Ferros")
+    @Schema(description = "Cidade do endereço", example = "Pau dos Ferros")
     @NotBlank(message = "Cidade é obrigatório")
     private String cidade;
 
-    @Schema(description = "Estado da cidade onde você mora", example = "RN")
+    @Schema(description = "Estado da cidade do endereço", example = "RN")
     @NotBlank(message = "Estado é obrigatório")
     private String estado;
 
-    @Schema(description = "CEP onde você mora", example = "59910-000")
+    @Schema(description = "CEP do endereço", example = "59910-000")
     @NotBlank(message = "CEP é obrigatório")
     @Pattern(message = "CEP deve estar no formato XXXXX-XXX", regexp = "^[0-9]{5}-[0-9]{3}$")
     private String cep;

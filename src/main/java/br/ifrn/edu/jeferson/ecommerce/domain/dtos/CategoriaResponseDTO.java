@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "DTO para resposta de categoria")
+@Schema(description = "DTO para resposta com dados de categoria")
 public class CategoriaResponseDTO {
     @Schema(description = "ID da categoria", example = "1")
     private Long id;

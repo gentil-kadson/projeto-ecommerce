@@ -16,5 +16,6 @@ import lombok.Setter;
 public class ProdutoPartialRequestDTO {
     @Min(value = 0, message = "Estoque não pode ser menor do que 0")
     @NotNull
+    @Schema(description = "Quantidade de um produto existente no estoque", example = "100")
     private Integer estoque;
 }
