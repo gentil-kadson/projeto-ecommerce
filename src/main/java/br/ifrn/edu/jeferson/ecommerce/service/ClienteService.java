@@ -26,6 +26,10 @@ public class ClienteService {
     @Autowired
     private PedidoMapper pedidoMapper;
 
+    public Cliente buscarCliente(Long id) {
+        return clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+    }
+
     public void jogueSeCpfJaExiste(String cpf, Long clienteId) {
         if (clienteId == null) {
             if (clienteRepository.existsByCpf(cpf)) {
@@ -65,7 +69,7 @@ public class ClienteService {
     }
 
     public ClienteResponseDTO buscarPorId(Long id) {
-       Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Este cliente não existe")); 
+       Cliente cliente = buscarCliente(id);
        return clienteMapper.toResponseDTO(cliente); 
     }
 
@@ -73,6 +77,11 @@ public class ClienteService {
         if (!clienteRepository.existsById(id)) {
             throw new ResourceNotFoundException("Este cliente não existe");
         }
+        Cliente cliente = buscarCliente(id);
+        if (!cliente.getPedidos().isEmpty()) {
+            throw new BusinessException("Este cliente não pode ser deletado, pois possui pedidos");
+        }
+        
         clienteRepository.deleteById(id);
     }
 
