@@ -2,6 +2,7 @@ package br.ifrn.edu.jeferson.ecommerce.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,16 @@ import br.ifrn.edu.jeferson.ecommerce.repository.ProdutoRepository;
 public class PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
+
     @Autowired
     private ClienteRepository clienteRepository;
+
     @Autowired
     private PedidoMapper pedidoMapper;
+
     @Autowired
     private ProdutoRepository produtoRepository;
+
     @Autowired
     private ItemPedidoMapper itemPedidoMapper;
 
@@ -73,5 +78,10 @@ public class PedidoService {
     public PedidoResponseDTO buscar(Long id) {
         Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado"));
         return pedidoMapper.toResponseDTO(pedido);
+    }
+
+    public List<PedidoResponseDTO> buscarPorCliente(Long id) {
+        List<Pedido> pedidos = pedidoRepository.findByClienteId(id);
+        return pedidoMapper.toDTOList(pedidos);
     }
 }

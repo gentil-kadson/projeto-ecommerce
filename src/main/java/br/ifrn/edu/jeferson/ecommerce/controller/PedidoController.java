@@ -1,5 +1,7 @@
 package br.ifrn.edu.jeferson.ecommerce.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,5 +32,10 @@ public class PedidoController {
     @GetMapping("/{id}")
     public ResponseEntity<PedidoResponseDTO> buscar(@PathVariable Long id) {
         return ResponseEntity.ok(pedidoService.buscar(id));
+    }
+
+    @GetMapping("/clientes/{id}")
+    public ResponseEntity<List<PedidoResponseDTO>> buscarPorCliente(@PathVariable Long id) {
+        return ResponseEntity.ok(pedidoService.buscarPorCliente(id));
     }
 }
