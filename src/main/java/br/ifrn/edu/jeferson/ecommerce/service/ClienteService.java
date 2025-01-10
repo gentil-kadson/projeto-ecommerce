@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import br.ifrn.edu.jeferson.ecommerce.domain.Cliente;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.ClienteRequestDTO;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.ClienteResponseDTO;
+import br.ifrn.edu.jeferson.ecommerce.domain.dtos.PedidoResponseDTO;
 import br.ifrn.edu.jeferson.ecommerce.exception.BusinessException;
 import br.ifrn.edu.jeferson.ecommerce.exception.ResourceNotFoundException;
 import br.ifrn.edu.jeferson.ecommerce.mapper.ClienteMapper;
+import br.ifrn.edu.jeferson.ecommerce.mapper.PedidoMapper;
 import br.ifrn.edu.jeferson.ecommerce.repository.ClienteRepository;
 
 @Service
@@ -20,6 +22,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteMapper clienteMapper;
+
+    @Autowired
+    private PedidoMapper pedidoMapper;
 
     public void jogueSeCpfJaExiste(String cpf, Long clienteId) {
         if (clienteId == null) {
@@ -79,5 +84,10 @@ public class ClienteService {
         clienteMapper.updateEntityFromDTO(clienteRequestDTO, cliente);
         Cliente clienteAlterado = clienteRepository.save(cliente);
         return clienteMapper.toResponseDTO(clienteAlterado);
+    }
+
+    public List<PedidoResponseDTO> listarPedidos(Long id) {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+        return pedidoMapper.toDTOList(cliente.getPedidos());
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.ClienteRequestDTO;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.ClienteResponseDTO;
+import br.ifrn.edu.jeferson.ecommerce.domain.dtos.PedidoResponseDTO;
 import br.ifrn.edu.jeferson.ecommerce.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,5 +57,10 @@ public class ClienteController {
     @PutMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid ClienteRequestDTO clienteRequestDTO) {
         return ResponseEntity.ok(clienteService.atualizar(id, clienteRequestDTO));
+    }
+
+    @GetMapping("/{id}/pedidos")
+    public ResponseEntity<List<PedidoResponseDTO>> listarPedidos(@PathVariable Long id) {
+        return ResponseEntity.ok(clienteService.listarPedidos(id));
     }
 }
