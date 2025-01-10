@@ -69,4 +69,9 @@ public class PedidoService {
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
         return pedidoMapper.toResponseDTO(pedidoSalvo);
     }
+
+    public PedidoResponseDTO buscar(Long id) {
+        Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado"));
+        return pedidoMapper.toResponseDTO(pedido);
+    }
 }

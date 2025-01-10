@@ -3,6 +3,8 @@ package br.ifrn.edu.jeferson.ecommerce.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +25,10 @@ public class PedidoController {
     @PostMapping
     public ResponseEntity<PedidoResponseDTO> salvar(@RequestBody @Valid PedidoRequestDTO pedidoRequestDTO) {
         return ResponseEntity.ok(pedidoService.salvar(pedidoRequestDTO));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoResponseDTO> buscar(@PathVariable Long id) {
+        return ResponseEntity.ok(pedidoService.buscar(id));
     }
 }
