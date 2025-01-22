@@ -3,6 +3,10 @@ package br.ifrn.edu.jeferson.ecommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,10 +38,12 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.salvar(clienteRequestDTO));
     }
 
-    @Operation(summary = "Lista todos os clientes registrados")
+    @Operation(summary = "Lista todos os clientes registrados com paginação")
     @GetMapping
-    public ResponseEntity<List<ClienteResponseDTO>> listar() {
-        return ResponseEntity.ok(clienteService.listar());
+    public ResponseEntity<Page<ClienteResponseDTO>> listar(
+        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+    ) { 
+        return ResponseEntity.ok(clienteService.listar(pageable));
     }
 
     @Operation(summary = "Busca um cliente")
