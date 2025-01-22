@@ -38,7 +38,7 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.salvar(clienteRequestDTO));
     }
 
-    @Operation(summary = "Lista todos os clientes registrados com paginação")
+    @Operation(summary = "Lista todos os clientes registrados paginados")
     @GetMapping
     public ResponseEntity<Page<ClienteResponseDTO>> listar(
         @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable

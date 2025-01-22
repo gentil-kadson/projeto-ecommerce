@@ -3,6 +3,10 @@ package br.ifrn.edu.jeferson.ecommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +56,14 @@ public class ProdutoController {
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDTO) {
         return ResponseEntity.ok(produtoService.atualizar(id, produtoRequestDTO));
+    }
+
+    @Operation(summary = "Lista todos os produtos paginados")
+    @GetMapping
+    public ResponseEntity<Page<ProdutoResponseDTO>> listar(
+        @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        return ResponseEntity.ok(produtoService.listar(pageable));
     }
 
     @Operation(summary = "Atualiza o estoque de um produto")
