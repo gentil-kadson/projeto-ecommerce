@@ -1,5 +1,6 @@
 package br.ifrn.edu.jeferson.ecommerce.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.ProdutoPartialRequestDTO;
@@ -61,9 +63,11 @@ public class ProdutoController {
     @Operation(summary = "Lista todos os produtos paginados")
     @GetMapping
     public ResponseEntity<Page<ProdutoResponseDTO>> listar(
-        @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+        @RequestParam(required = false) String nome,
+        @RequestParam(required = false) BigDecimal precoMax,
+        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        return ResponseEntity.ok(produtoService.listar(pageable));
+        return ResponseEntity.ok(produtoService.listar(pageable, nome, precoMax));
     }
 
     @Operation(summary = "Atualiza o estoque de um produto")

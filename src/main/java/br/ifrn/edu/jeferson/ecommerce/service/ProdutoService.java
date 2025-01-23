@@ -1,10 +1,12 @@
 package br.ifrn.edu.jeferson.ecommerce.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.ifrn.edu.jeferson.ecommerce.domain.Categoria;
@@ -15,6 +17,7 @@ import br.ifrn.edu.jeferson.ecommerce.exception.ResourceNotFoundException;
 import br.ifrn.edu.jeferson.ecommerce.mapper.ProdutoMapper;
 import br.ifrn.edu.jeferson.ecommerce.repository.CategoriaRepository;
 import br.ifrn.edu.jeferson.ecommerce.repository.ProdutoRepository;
+import br.ifrn.edu.jeferson.ecommerce.specification.ProdutoSpecification;
 
 @Service
 public class ProdutoService {
@@ -37,8 +40,10 @@ public class ProdutoService {
         return produtoMapper.toResponseDTO(produto);
     }
 
-    public Page<ProdutoResponseDTO> listar(Pageable pageable) {
-        Page<Produto> produtosPage = produtoRepository.findAll(pageable);
+    public Page<ProdutoResponseDTO> listar(Pageable pageable, String nome, BigDecimal precoMax) {
+        Specification<Produto> specification = Specification.where(ProdutoSpecification.comPrecoMax(precoMax))
+                                                            .and(ProdutoSpecification.contendoNome(nome));
+        Page<Produto> produtosPage = produtoRepository.findAll(specification, pageable);
         return produtosPage.map(produtoMapper::toResponseDTO);
     }
 
