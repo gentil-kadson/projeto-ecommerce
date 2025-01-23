@@ -3,6 +3,10 @@ package br.ifrn.edu.jeferson.ecommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +41,14 @@ public class PedidoController {
     @GetMapping("/{id}")
     public ResponseEntity<PedidoResponseDTO> buscar(@PathVariable Long id) {
         return ResponseEntity.ok(pedidoService.buscar(id));
+    }
+
+    @Operation(summary = "Lista todos os pedidos paginados")
+    @GetMapping
+    public ResponseEntity<Page<PedidoResponseDTO>> listar(
+        @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        return ResponseEntity.ok(pedidoService.listar(pageable));
     }
 
     @Operation(summary = "Busca todos os pedidos feitos pelo cliente")

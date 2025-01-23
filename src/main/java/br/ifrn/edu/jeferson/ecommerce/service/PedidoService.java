@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.ifrn.edu.jeferson.ecommerce.domain.Cliente;
@@ -83,6 +85,11 @@ public class PedidoService {
     public PedidoResponseDTO buscar(Long id) {
         Pedido pedido = buscarPedido(id);
         return pedidoMapper.toResponseDTO(pedido);
+    }
+
+    public Page<PedidoResponseDTO> listar(Pageable pageable) {
+        Page<Pedido> pedidosPage = pedidoRepository.findAll(pageable);
+        return pedidosPage.map(pedidoMapper::toResponseDTO);
     }
 
     public List<PedidoResponseDTO> buscarPorCliente(Long id) {
