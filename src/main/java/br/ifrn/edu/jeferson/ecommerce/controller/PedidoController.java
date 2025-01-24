@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.PedidoPartialRequestDTO;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.PedidoRequestDTO;
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.PedidoResponseDTO;
+import br.ifrn.edu.jeferson.ecommerce.domain.enums.StatusPedido;
 import br.ifrn.edu.jeferson.ecommerce.service.PedidoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,9 +48,10 @@ public class PedidoController {
     @Operation(summary = "Lista todos os pedidos paginados")
     @GetMapping
     public ResponseEntity<Page<PedidoResponseDTO>> listar(
-        @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+        @RequestParam(required = false) StatusPedido status,
+        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        return ResponseEntity.ok(pedidoService.listar(pageable));
+        return ResponseEntity.ok(pedidoService.listar(pageable, status));
     }
 
     @Operation(summary = "Busca todos os pedidos feitos pelo cliente")

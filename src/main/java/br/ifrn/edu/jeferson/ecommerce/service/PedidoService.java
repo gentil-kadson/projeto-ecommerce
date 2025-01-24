@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.ifrn.edu.jeferson.ecommerce.domain.Cliente;
@@ -25,6 +26,7 @@ import br.ifrn.edu.jeferson.ecommerce.mapper.PedidoMapper;
 import br.ifrn.edu.jeferson.ecommerce.repository.ClienteRepository;
 import br.ifrn.edu.jeferson.ecommerce.repository.PedidoRepository;
 import br.ifrn.edu.jeferson.ecommerce.repository.ProdutoRepository;
+import br.ifrn.edu.jeferson.ecommerce.specification.PedidoSpecification;
 
 @Service
 public class PedidoService {
@@ -87,8 +89,9 @@ public class PedidoService {
         return pedidoMapper.toResponseDTO(pedido);
     }
 
-    public Page<PedidoResponseDTO> listar(Pageable pageable) {
-        Page<Pedido> pedidosPage = pedidoRepository.findAll(pageable);
+    public Page<PedidoResponseDTO> listar(Pageable pageable, StatusPedido statusPedido) {
+        Specification<Pedido> specification = Specification.where(PedidoSpecification.status(statusPedido));
+        Page<Pedido> pedidosPage = pedidoRepository.findAll(specification, pageable);
         return pedidosPage.map(pedidoMapper::toResponseDTO);
     }
 
