@@ -1,8 +1,13 @@
 package br.ifrn.edu.jeferson.ecommerce.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ifrn.edu.jeferson.ecommerce.domain.dtos.ProdutoPartialRequestDTO;
@@ -52,6 +58,16 @@ public class ProdutoController {
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDTO) {
         return ResponseEntity.ok(produtoService.atualizar(id, produtoRequestDTO));
+    }
+
+    @Operation(summary = "Lista todos os produtos paginados")
+    @GetMapping
+    public ResponseEntity<Page<ProdutoResponseDTO>> listar(
+        @RequestParam(required = false) String nome,
+        @RequestParam(required = false) BigDecimal precoMax,
+        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        return ResponseEntity.ok(produtoService.listar(pageable, nome, precoMax));
     }
 
     @Operation(summary = "Atualiza o estoque de um produto")
