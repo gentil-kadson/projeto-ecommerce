@@ -65,7 +65,7 @@ public class ProdutoController {
     public ResponseEntity<Page<ProdutoResponseDTO>> listar(
         @RequestParam(required = false) String nome,
         @RequestParam(required = false) BigDecimal precoMax,
-        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+        @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
         return ResponseEntity.ok(produtoService.listar(pageable, nome, precoMax));
     }

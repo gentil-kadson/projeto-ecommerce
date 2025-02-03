@@ -49,7 +49,7 @@ public class PedidoController {
     @GetMapping
     public ResponseEntity<Page<PedidoResponseDTO>> listar(
         @RequestParam(required = false) StatusPedido status,
-        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
+        @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.ASC) Pageable pageable
     ) {
         return ResponseEntity.ok(pedidoService.listar(pageable, status));
     }

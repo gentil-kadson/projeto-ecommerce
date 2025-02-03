@@ -64,7 +64,7 @@ public class PedidoService {
 
             Integer stockQuantity = produto.getEstoque() - itemDTO.getQuantidade();
             if (stockQuantity < 0) {
-                throw new BusinessException("Produto fora de estoque");
+                throw new BusinessException("Quantidade informada além do estoque ou o produto esgotou.");
             }
 
             produto.setEstoque(stockQuantity);
